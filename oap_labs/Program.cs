@@ -10,105 +10,94 @@ namespace oap_labs
     {
         static void Main(string[] args)
         {
-            Console.Write("Input number6: ");
-            var number6 = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Input number9: ");
-            var number9 = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Input number12: ");
-            var number12 = Convert.ToDouble(Console.ReadLine());
-            if (number6 >= 0)
             {
-                number6 = Math.Pow(number6, 9);
-            }
-            else
+            var MassivDate = new List<DateTime>() { 
+                new DateTime(2021, 1, 15), 
+                new DateTime(2021, 2, 20),
+                new DateTime(2011, 5, 2),
+                new DateTime(2015, 5, 1),
+                new DateTime(2013, 5, 3),
+                new DateTime(2020, 1, 17)};
+            var result = new Dictionary<int, int>();
+            foreach(DateTime TekushayaData in MassivDate)
             {
-                number6 = Math.Pow(number6, 9);
-            }
-            if (number9 >= 0)
-            {
-                number9 = Math.Pow(number9, 9);
-            }
-            else
-            {
-                number9 = Math.Pow(number9, 12);
-            }
-            number9 = (number12 >= 0) ? Math.Pow(number12, 9) : Math.Pow(number12, 15);
-            if (number9 >= 0)
-            {
-                number9 = Math.Pow(number12, 9);
-            }
-            else
-            {
-                number9 = Math.Pow(number12, 15);
-            }
-            Console.WriteLine($"number6 = {number6}");
-            Console.WriteLine($"number9 = {number9}");
-            Console.WriteLine($"number12 = {number12}");
-
-
-
-            Console.WriteLine("Input x6, y6, x7, y7");
-
-            var x6 = Convert.ToDouble(Console.ReadLine());
-            var y6 = Convert.ToDouble(Console.ReadLine());
-            var x7 = Convert.ToDouble(Console.ReadLine());
-            var y7 = Convert.ToDouble(Console.ReadLine());
-            var Dlina1 = Math.Sqrt(Math.Pow(x6, 2) + Math.Pow(y6, 2));
-            var Dlina2 = Math.Sqrt(Math.Pow(x7, 2) + Math.Pow(y7, 2));
-
-            if (Dlina1 < Dlina2)
-            {
-                Console.WriteLine("первaя точка ближе");
-            }
-            else
-            {
-                Console.WriteLine("вторая точка ближе");
-            }
-            Console.ReadLine();
-
-
-
-
-            Console.Write("Input ugol2: ");
-            var ugol2 = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Input ugol3: ");
-            var ugol3 = Convert.ToDouble(Console.ReadLine());
-            if ((ugol2 + ugol3) < 180)
-            {
-                Console.WriteLine("треугольник существует");
-                if (ugol2 == 90 || ugol3 == 90 || ugol3 + ugol2 == 90)
+                if (result.ContainsKey(TekushayaData.Month))
                 {
-                    Console.WriteLine("треугольник прямоугольный");
-                }
-                else Console.WriteLine("треугольник не прямоугольный");
-            }
-            else
-            {
-                Console.WriteLine("треугольник не существует");
-
-
-
-                Console.Write("Number5:");
-                var Number5 = Convert.ToDouble(Console.ReadLine());
-                Console.Write("Number9:");
-                var Number9 = Convert.ToDouble(Console.ReadLine());
-                var PoluSumma = (Number5 + Number9) / 2;
-                var Proizvedenie = 2 * (Number5 * Number9);
-                if (Number5 < Number9)
-                {
-                    Number5 = PoluSumma;
-                    Number9 = Proizvedenie;
+                    result[TekushayaData.Month] = result[TekushayaData.Month] + 1;
                 }
                 else
+                    result[TekushayaData.Month] = 1;
+            }
+            var PopularMonth = -1;
+            var MaxCount = 0;
+            foreach (KeyValuePair<int,int> keyValue in result)
+            {
+                if(keyValue.Value > MaxCount)
                 {
-                    Number9 = PoluSumma;
-                    Number5 = Proizvedenie;
+                    MaxCount = keyValue.Value;
+                    PopularMonth = keyValue.Key;
                 }
-                Console.WriteLine($"number5 = {Number5}");
-                Console.WriteLine($"number9 = {Number9}");
+            }
+            Console.WriteLine($"Самый популярный месяц {PopularMonth}");
+            
+                
+                Console.WriteLine("Input posledovatelnost: ");
+                string Posledovatelnost = Console.ReadLine();
+                var StrelkaCoint = 0;
+                var strelka1 = ">>-->";
+                var strelka2 = "<--<<";
+                int poz = 0;
+                while((poz = Posledovatelnost.IndexOf(strelka1, poz))>=0)
+                {
+                    StrelkaCoint++;
+                    poz++;
+                }
+                poz = 0;
+                while ((poz = Posledovatelnost.IndexOf(strelka2, poz)) >= 0)
+                {
+                    StrelkaCoint++;
+                    poz++;
+                }
+                Console.WriteLine($"Количество стрелок: {StrelkaCoint}");
+                
+                
+                DateTime date1 = new DateTime(2021, 02, 21);
+                DateTime date2 = new DateTime(2026, 02, 25);
+                Console.WriteLine(Math.Abs(date1.Subtract(date2).TotalDays));
+                
+                
+                Console.WriteLine("Введите год: ");
+                DateTime date1 = new DateTime(Convert.ToInt32(Console.ReadLine()), 1, 1);
+                date1 = date1.AddDays(255);
+                var DateString = date1.ToString("dd MMMM");
+                Console.WriteLine($"день программиста отмечается  {DateString}");
+                
+                
+                Console.WriteLine("Введите день: ");
+                DateTime date1 = new DateTime(2021, 1, 1);
+                date1 = date1.AddDays(Convert.ToInt32(Console.ReadLine())-1);
+                var DateString = date1.ToString("dddd");
+                var voskresenie = date1.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)date1.DayOfWeek;
+                Console.WriteLine($"день недели {DateString}, и номер дня недели {voskresenie}");
+                
+                DateTime date1 = new DateTime(2021, 06, 21);
+                Console.WriteLine("Введите дату в формате дд.мм.гггг: ");
+                string date2 = Console.ReadLine();
+                string[] StringArray = date2.Split('.');
+                var Date3 = new DateTime(Convert.ToInt32(StringArray[2]), Convert.ToInt32(StringArray[1]), Convert.ToInt32(StringArray[0]));
+                var Raznitca = date1.Subtract(Date3);
+                if (Raznitca.TotalDays == 0)
+                {
+                    Console.WriteLine("Сегодня экзамен");
+                }
+                else if (Raznitca.TotalDays > 0)
+                    Console.WriteLine($"Экзамен будет через {Raznitca.TotalDays} дней");
+                else
+                    Console.WriteLine($"Экзамен был {Math.Abs(Raznitca.TotalDays)} дней назад");
 
 
-
+                Console.Write("Press ENTER to continue...");
+                Console.ReadLine();
             }
         }
     }
