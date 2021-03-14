@@ -11,7 +11,6 @@ namespace oap_labs
         static void Main(string[] args)
         {
             {
-
                 //ExceptionTest();
                 //ExceptionTest2();
                 //ExceptionTest3();
@@ -22,157 +21,132 @@ namespace oap_labs
                 //ExceptionTest8();
                 //ExceptionTest9();
                 //ExceptionTest10();
-               
                 Console.ReadKey();
             }
             static void ExceptionTest()
             {
-                int x = 5;
-                int y = x / 0;
-                Console.WriteLine($"Результат: {y}");
-                Console.WriteLine("Конец программы");
-                Console.Read();
+                DriveInfo[] drives = DriveInfo.GetDrives();
+                foreach (DriveInfo drive in drives)
+                {
+                    Console.WriteLine($"Название: {drive.Name}");
+                    Console.WriteLine($"Тип: {drive.DriveType}");
+                    if (drive.IsReady)
+                    {
+                        Console.WriteLine($"Объем диска: {drive.TotalSize}");
+                        Console.WriteLine($"Свободное пространство: {drive.TotalFreeSpace}");
+                        Console.WriteLine($"Метка: {drive.VolumeLabel}");
+                    }
+                    Console.WriteLine();
+                }
             }
             static void ExceptionTest2()
             {
-                try
+                string dirName = "C:\\";
+                if (Directory.Exists(dirName))
                 {
-                    int x = 5;
-                    int y = x / 0;
-                    Console.WriteLine($"Результат: {y}");
+                    Console.WriteLine("Подкаталоги:");
+                    string[] dirs = Directory.GetDirectories(dirName);
+                    foreach (string s in dirs)
+                    {
+                        Console.WriteLine(s);
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("Файлы:");
+                    string[] files = Directory.GetFiles(dirName);
+                    foreach (string s in files)
+                    {
+                        Console.WriteLine(s);
+                    }
                 }
-                catch
-                {
-                    Console.WriteLine("Возникло исключение!");
-                }
-                finally
-                {
-                    Console.WriteLine("Блок finally");
-                }
-                Console.WriteLine("Конец программы");
-                Console.Read();
             }
             static void ExceptionTest3()
             {
-                try
+                string path = @"C:\SomeDir";
+                string subpath = @"program\avalon";
+                DirectoryInfo dirInfo = new DirectoryInfo(path);
+                if (!dirInfo.Exists)
                 {
-                    int x = 5;
-                    int y = x / 0;
-                    Console.WriteLine($"Результат: {y}");
+                    dirInfo.Create();
                 }
-                catch
-                {
-                    Console.WriteLine("Возникло исключение!");
-                }
+                dirInfo.CreateSubdirectory(subpath);
             }
             static void ExceptionTest4()
             {
-                Console.WriteLine("Введите число");
-                int x = Int32.Parse(Console.ReadLine());
-
-                x *= x;
-                Console.WriteLine("Квадрат числа: " + x);
-                Console.Read();
+                string dirName = "C:\\Program Files";
+                DirectoryInfo dirInfo = new DirectoryInfo(dirName);
+                Console.WriteLine($"Название каталога: {dirInfo.Name}");
+                Console.WriteLine($"Полное название каталога: {dirInfo.FullName}");
+                Console.WriteLine($"Время создания каталога: {dirInfo.CreationTime}");
+                Console.WriteLine($"Корневой каталог: {dirInfo.Root}");
             }
             static void ExceptionTest5()
             {
-                Console.WriteLine("Введите число");
-                int x;
-                string input = Console.ReadLine();
-                if (Int32.TryParse(input, out x))
+                string dirName = @"C:\SomeFolder";
+                try
                 {
-                    x *= x;
-                    Console.WriteLine("Квадрат числа: " + x);
+                    DirectoryInfo dirInfo = new DirectoryInfo(dirName);
+                    dirInfo.Delete(true);
+                    Console.WriteLine("Каталог удален");
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Некорректный ввод");
+                    Console.WriteLine(ex.Message);
                 }
-                Console.Read();
             }
             static void ExceptionTest6()
             {
-                try
+                string oldPath = @"C:\SomeFolder";
+                string newPath = @"C:\SomeDir";
+                DirectoryInfo dirInfo = new DirectoryInfo(oldPath);
+                if (dirInfo.Exists && Directory.Exists(newPath) == false)
                 {
-                    int x = 5;
-                    int y = x / 0;
-                    Console.WriteLine($"Результат: {y}");
-                }
-                catch (DivideByZeroException)
-                {
-                    Console.WriteLine("Возникло исключение DivideByZeroException");
+                    dirInfo.MoveTo(newPath);
                 }
             }
             static void ExceptionTest7()
             {
-                try
+                string path = @"C:\apache\hta.txt";
+                FileInfo fileInf = new FileInfo(path);
+                if (fileInf.Exists)
                 {
-                    int x = 5;
-                    int y = x / 0;
-                    Console.WriteLine($"Результат: {y}");
-                }
-                catch (DivideByZeroException ex)
-                {
-                    Console.WriteLine($"Возникло исключение {ex.Message}");
+                    Console.WriteLine("Имя файла: {0}", fileInf.Name);
+                    Console.WriteLine("Время создания: {0}", fileInf.CreationTime);
+                    Console.WriteLine("Размер: {0}", fileInf.Length);
                 }
             }
             static void ExceptionTest8()
             {
-                int x = 1;
-                int y = 0;
+                string path = @"C:\apache\hta.txt";
+                FileInfo fileInf = new FileInfo(path);
+                if (fileInf.Exists)
+                {
+                    fileInf.Delete();
 
-                try
-                {
-                    int result = x / y;
-                }
-                catch (DivideByZeroException) when (y == 0 && x == 0)
-                {
-                    Console.WriteLine("y не должен быть равен 0");
-                }
-                catch (DivideByZeroException ex)
-                {
-                    Console.WriteLine(ex.Message);
                 }
             }
             static void ExceptionTest9()
             {
-                try
+                string path = @"C:\apache\hta.txt";
+                string newPath = @"C:\SomeDir\hta.txt";
+                FileInfo fileInf = new FileInfo(path);
+                if (fileInf.Exists)
                 {
-                    int x = 5;
-                    int y = x / 0;
-                    Console.WriteLine($"Результат: {y}");
+                    fileInf.MoveTo(newPath);
+                    
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Исключение: {ex.Message}");
-                    Console.WriteLine($"Метод: {ex.TargetSite}");
-                    Console.WriteLine($"Трассировка стека: {ex.StackTrace}");
-                }
-
-                Console.Read();
             }
             static void ExceptionTest10()
             {
-                try
+                string path = @"C:\apache\hta.txt";
+                string newPath = @"C:\SomeDir\hta.txt";
+                FileInfo fileInf = new FileInfo(path);
+                if (fileInf.Exists)
                 {
-                    int[] numbers = new int[4];
-                    numbers[7] = 9;     // IndexOutOfRangeException
-
-                    int x = 5;
-                    int y = x / 0;  // DivideByZeroException
-                    Console.WriteLine($"Результат: {y}");
+                    fileInf.CopyTo(newPath, true);
+                    
                 }
-                catch (DivideByZeroException)
-                {
-                    Console.WriteLine("Возникло исключение DivideByZeroException");
-                }
-                catch (IndexOutOfRangeException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
-                Console.Read();
             }
+        }
 
 
         }
