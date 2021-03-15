@@ -1,76 +1,201 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.Runtime.Serialization;
 
 namespace oap_labs
 {
-    [Serializable]
-    public class Student
-    {
-        public string Name { get; set; }
-        public DateTime BirthDay { get; set; }
-        public string Group { get; set; }
-        public Student() { }
-    }
     class Program
     {
-        static void Import()
-        {
-            var StudentList = new List<Student>();
-            using (TextFieldParser parser = new TextFieldParser(new StringReader("Иванов Иван Иванович,01.01.2000,И-21\nПетров Петр Петрович,02.02.2002,С-21\nСидоров Сидор Сидорович,03.03.2003,И-31")))
-            {
-                // свойство TextFieldType определяет тип полей: с разделителями или фиксированной ширины
-                parser.TextFieldType = FieldType.Delimited;
-
-                // можно указать произвольный разделитель
-                parser.SetDelimiters(",");
-
-                // считываем пока не дойдем до конца файла
-                while (!parser.EndOfData)
-                {
-                    //метод ReadFields разбивает исходную строку на массив строк
-                    string[] fields = parser.ReadFields();
-                    var Student1 = new Student();
-                    Student1.Name = fields[0];
-
-                    var DateParts = fields[1].Split('.');
-
-                    Student1.BirthDay = new DateTime(Convert.ToInt32(DateParts[2]), Convert.ToInt32(DateParts[1]), Convert.ToInt32(DateParts[0]));
-
-                    Student1.Group = fields[2];
-                    StudentList.Add(Student1);
-
-                }
-                XmlSerializer formatter = new XmlSerializer(typeof(Stident[]));
-                using (FileStream fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
-                {
-                    formatter.Serialize(fs, StudentList.ToArray());
-                }
-            }
-        }
-
-        static void Export()
-        {
-            using (FileStream fs = new FileStream("Students.xml", FileMode.OpenOrCreate))
-            {
-                XmlSerializer formatter = new XmlSerializer(typeof(Student[]));
-                Student[] newpeople = (Student[])formatter.Deserialize(fs);
-
-                string json = JsonSerializer.Serialize<Student[]>(newpeople);
-
-                Console.WriteLine(json);
-            }
-        }
-
         static void Main(string[] args)
         {
-            Import();
+            //ExceptionTest();
+            //ExceptionTest2();
+            //ExceptionTest3();
+            //ExceptionTest4(); 
+            //ExceptionTest5();
+            //ExceptionTest6();
+            //ExceptionTest7();
+            //ExceptionTest8();
+            //ExceptionTest9();
+            //ExceptionTest10();
+
+            FactorialAsync(-4);
+            FactorialAsync(6);
+
+            Console.ReadKey();
+        }
+
+        private static void FactorialAsync(int v)
+        {
+            throw new NotImplementedException();
+        }
+
+        static void ExceptionTest()
+        {
+            Task task1 = new Task(() => Console.WriteLine("Task1 is executed"));
+            task1.Start();
+
+            Task task2 = Task.Factory.StartNew(() => Console.WriteLine("Task2 is executed"));
+
+            Task task3 = Task.Run(() => Console.WriteLine("Task3 is executed"));
+
+            Console.ReadLine();
+        }
+        static void ExceptionTest2()
+        {
+            Task task = new Task(Display);
+            task.Start();
+
+            Console.WriteLine("Завершение метода Main");
+
+            Console.ReadLine();
+        }
+        static void ExceptionTest3()
+        {
+            Task task = new Task(Display);
+            task.Start();
+            task.Wait();
+            Console.WriteLine("Завершение метода Main");
+            Console.ReadLine();
+        }
+        static async Task ExceptionTest4Async()
+        {
+            int result = 1;
+            for (int i = 1; i <= 6; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(8000);
+            Console.WriteLine($"Факториал равен {result}");
+
+            Console.WriteLine("Начало метода FactorialAsync"); // выполняется синхронно
+            await Task.Run(() => Factorial());                // выполняется асинхронно
+            Console.WriteLine("Конец метода FactorialAsync");
+        }
+        static void ExceptionTest5()
+        {
+            int result = 1;
+            for (int i = 1; i <= 6; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(8000);
+            Console.WriteLine($"Факториал равен {result}");
+
+            Console.WriteLine("Начало метода FactorialAsync"); // выполняется синхронно
+            await Task.Run(() => FactorialAsync());                // выполняется асинхронно
+            Console.WriteLine("Конец метода FactorialAsync");
+        }
+        static void ExceptionTest6()
+        {
+            string s = "Hello world! One step at a time";
+
+
+            using (StreamWriter writer = new StreamWriter("hello.txt", false))
+            {
+                await writer.WriteLineAsync(s);  // асинхронная запись в файл
+            }
+            using (StreamReader reader = new StreamReader("hello.txt"))
+            {
+                string result = await reader.ReadToEndAsync();  // асинхронное чтение из файла
+                Console.WriteLine(result);
+            }
+            static void ExceptionTest6()
+            {
+                int result = 1;
+                for (int i = 1; i <= 6; i++)
+                {
+                    result *= i;
+                }
+                Thread.Sleep(8000);
+                Console.WriteLine($"Факториал равен {result}");
+            }
+        }
+        static void ExceptionTest7()
+        {
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(5000);
+            Console.WriteLine($"Факториал равен {result}");
+            {
+                Console.WriteLine("Некоторая работа");
+                Console.Read();
+            }
+
+            static void ExceptionTest8()
+            {
+                int result = 1;
+                for (int i = 1; i <= n; i++)
+                {
+                    result *= i;
+                }
+                return result;
+            }
+
+        }
+        static void ExceptionTest9()
+        {
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            return result;
+        }
+        static async Task<int> FactorialAsync(int n)
+        {
+            return await Task.Run(() => Factorial(n));
+        }
+        static async Task Main(string[] args)
+        {
+            int n1 = await FactorialAsync(5);
+            int n2 = await FactorialAsync(6);
+            Console.WriteLine($"n1={n1}  n2={n2}");
+            Console.Read();
+        }
+        static void ExceptionTest10()
+        {
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            Console.WriteLine($"Факториал числа {n} равен {result}");
+        }
+        // определение асинхронного метода
+        static async void FactorialAsync()
+        {
+            await Task.Run(() => Factorial(4));
+            await Task.Run(() => Factorial(3));
+            await Task.Run(() => Factorial(5));
+        }
+        static void ExceptionTest11()
+        {
+            if (n < 1)
+                throw new Exception($"{n} : число не должно быть меньше 1");
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            Console.WriteLine($"Факториал числа {n} равен {result}");
+        }
+        static async void FactorialAsync(int n)
+        {
+            try
+            {
+                await Task.Run(() => Factorial(n));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
+}
