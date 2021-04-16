@@ -22,7 +22,7 @@ namespace oap_labs
             //ExceptionTest8();
             //ExceptionTest9();
             //ExceptionTest10();
-          
+
             FactorialAsync(-4);
             FactorialAsync(6);
 
@@ -72,8 +72,8 @@ namespace oap_labs
             Thread.Sleep(8000);
             Console.WriteLine($"Факториал равен {result}");
 
-            Console.WriteLine("Начало метода FactorialAsync"); 
-            await Task.Run(() => Factorial());              
+            Console.WriteLine("Начало метода FactorialAsync");
+            await Task.Run(() => Factorial());
             Console.WriteLine("Конец метода FactorialAsync");
         }
         static void ExceptionTest5()
@@ -86,8 +86,8 @@ namespace oap_labs
             Thread.Sleep(8000);
             Console.WriteLine($"Факториал равен {result}");
 
-            Console.WriteLine("Начало метода FactorialAsync"); 
-            await Task.Run(() => FactorialAsync());               
+            Console.WriteLine("Начало метода FactorialAsync");
+            await Task.Run(() => FactorialAsync());
             Console.WriteLine("Конец метода FactorialAsync");
         }
         static void ExceptionTest6()
@@ -97,11 +97,11 @@ namespace oap_labs
 
             using (StreamWriter writer = new StreamWriter("hello.txt", false))
             {
-                await writer.WriteLineAsync(s);  
+                await writer.WriteLineAsync(s);
             }
             using (StreamReader reader = new StreamReader("hello.txt"))
             {
-                string result = await reader.ReadToEndAsync();  
+                string result = await reader.ReadToEndAsync();
                 Console.WriteLine(result);
             }
             static void ExceptionTest6()
@@ -138,7 +138,7 @@ namespace oap_labs
                 }
                 return result;
             }
-           
+
         }
         static void ExceptionTest9()
         {
