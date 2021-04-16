@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace oap_labs
@@ -10,76 +12,188 @@ namespace oap_labs
     {
         static void Main(string[] args)
         {
-            {
-                var MassivDate = new List<DateTime>() {
-                new DateTime(2021, 1, 15),
-                new DateTime(2021, 2, 20),
-                new DateTime(2011, 5, 2),
-                new DateTime(2015, 5, 1),
-                new DateTime(2013, 5, 3),
-            }   new DateTime(2020, 1, 17)};
-            var result = new Dictionary<int, int>();
-            foreach (DateTime TekushayaData in MassivDate)
-            {
-                if (result.ContainsKey(TekushayaData.Month))
-                {
-                    result[TekushayaData.Month] = result[TekushayaData.Month] + 1;
-                }
-                else
-                    result[TekushayaData.Month] = 1;
-            }
-            var PopularMonth = -1;
-            var MaxCount = 0;
-            foreach (KeyValuePair<int, int> keyValue in result)
-            {
-                if (keyValue.Value > MaxCount)
-                {
-                    MaxCount = keyValue.Value;
-                    PopularMonth = keyValue.Key;
-                }
-            }
-            Console.WriteLine($"Самый популярный месяц {PopularMonth}");
+            //ExceptionTest();
+            //ExceptionTest2();
+            //ExceptionTest3();
+            //ExceptionTest4(); 
+            //ExceptionTest5();
+            //ExceptionTest6();
+            //ExceptionTest7();
+            //ExceptionTest8();
+            //ExceptionTest9();
+            //ExceptionTest10();
+          
+            FactorialAsync(-4);
+            FactorialAsync(6);
 
-
-            DateTime date1 = new DateTime(2021, 02, 21);
-            DateTime date2 = new DateTime(2026, 02, 25);
-            Console.WriteLine(Math.Abs(date1.Subtract(date2).TotalDays));
-
-
-            Console.WriteLine("Введите год: ");
-            DateTime date1 = new DateTime(Convert.ToInt32(Console.ReadLine()), 1, 1);
-            date1 = date1.AddDays(255);
-            var DateString = date1.ToString("dd MMMM");
-            Console.WriteLine($"день программиста отмечается  {DateString}");
-
-
-            Console.WriteLine("Введите день: ");
-            DateTime date1 = new DateTime(2021, 1, 1);
-            date1 = date1.AddDays(Convert.ToInt32(Console.ReadLine()) - 1);
-            var DateString = date1.ToString("dddd");
-            var voskresenie = date1.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)date1.DayOfWeek;
-            Console.WriteLine($"день недели {DateString}, и номер дня недели {voskresenie}");
-
-            DateTime Date1 = new DateTime(2021, 06, 21);
-            Console.WriteLine("Введите дату в формате дд.мм.гггг: ");
-            string Date2 = Console.ReadLine();
-            string[] StringArray = Date2.Split('.');
-            var Date3 = new DateTime(Convert.ToInt32(StringArray[2]), Convert.ToInt32(StringArray[1]), Convert.ToInt32(StringArray[0]));
-            var Raznitca = Date1.Subtract(Date3);
-            if (Raznitca.TotalDays == 0)
-            {
-                Console.WriteLine("Сегодня экзамен");
-            }
-            else if (Raznitca.TotalDays > 0)
-                Console.WriteLine($"Экзамен будет через {Raznitca.TotalDays} дней");
-            else
-                Console.WriteLine($"Экзамен был {Math.Abs(Raznitca.TotalDays)} дней назад");
-
-
-            Console.Write("Press ENTER to continue...");
-            Console.ReadLine();
-
-
+            Console.ReadKey();
         }
-    }
-}
+
+        private static void FactorialAsync(int v)
+        {
+            throw new NotImplementedException();
+        }
+
+        static void ExceptionTest()
+        {
+            Task task1 = new Task(() => Console.WriteLine("Task1 is executed"));
+            task1.Start();
+
+            Task task2 = Task.Factory.StartNew(() => Console.WriteLine("Task2 is executed"));
+
+            Task task3 = Task.Run(() => Console.WriteLine("Task3 is executed"));
+
+            Console.ReadLine();
+        }
+        static void ExceptionTest2()
+        {
+            Task task = new Task(Display);
+            task.Start();
+
+            Console.WriteLine("Завершение метода Main");
+
+            Console.ReadLine();
+        }
+        static void ExceptionTest3()
+        {
+            Task task = new Task(Display);
+            task.Start();
+            task.Wait();
+            Console.WriteLine("Завершение метода Main");
+            Console.ReadLine();
+        }
+        static async Task ExceptionTest4Async()
+        {
+            int result = 1;
+            for (int i = 1; i <= 6; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(8000);
+            Console.WriteLine($"Факториал равен {result}");
+
+            Console.WriteLine("Начало метода FactorialAsync"); 
+            await Task.Run(() => Factorial());              
+            Console.WriteLine("Конец метода FactorialAsync");
+        }
+        static void ExceptionTest5()
+        {
+            int result = 1;
+            for (int i = 1; i <= 6; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(8000);
+            Console.WriteLine($"Факториал равен {result}");
+
+            Console.WriteLine("Начало метода FactorialAsync"); 
+            await Task.Run(() => FactorialAsync());               
+            Console.WriteLine("Конец метода FactorialAsync");
+        }
+        static void ExceptionTest6()
+        {
+            string s = "Hello world! One step at a time";
+
+
+            using (StreamWriter writer = new StreamWriter("hello.txt", false))
+            {
+                await writer.WriteLineAsync(s);  
+            }
+            using (StreamReader reader = new StreamReader("hello.txt"))
+            {
+                string result = await reader.ReadToEndAsync();  
+                Console.WriteLine(result);
+            }
+            static void ExceptionTest6()
+            {
+                int result = 1;
+                for (int i = 1; i <= 6; i++)
+                {
+                    result *= i;
+                }
+                Thread.Sleep(8000);
+                Console.WriteLine($"Факториал равен {result}");
+            }
+        }
+        static void ExceptionTest7()
+        {
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(5000);
+            Console.WriteLine($"Факториал равен {result}");
+            {
+                Console.WriteLine("Некоторая работа");
+                Console.Read();
+            }
+
+            static void ExceptionTest8()
+            {
+                int result = 1;
+                for (int i = 1; i <= n; i++)
+                {
+                    result *= i;
+                }
+                return result;
+            }
+           
+        }
+        static void ExceptionTest9()
+        {
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            return result;
+        }
+        static async Task<int> FactorialAsync(int n)
+        {
+            return await Task.Run(() => Factorial(n));
+        }
+        static async Task Main(string[] args)
+        {
+            int n1 = await FactorialAsync(5);
+            int n2 = await FactorialAsync(6);
+            Console.WriteLine($"n1={n1}  n2={n2}");
+            Console.Read();
+        }
+        static void ExceptionTest10()
+        {
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            Console.WriteLine($"Факториал числа {n} равен {result}");
+        }
+        static async void FactorialAsync()
+        {
+            await Task.Run(() => Factorial(4));
+            await Task.Run(() => Factorial(3));
+            await Task.Run(() => Factorial(5));
+        }
+        static void ExceptionTest11()
+        {
+            if (n < 1)
+                throw new Exception($"{n} : число не должно быть меньше 1");
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            Console.WriteLine($"Факториал числа {n} равен {result}");
+        }
+        static async void FactorialAsync(int n)
+        {
+            try
+            {
+                await Task.Run(() => Factorial(n));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
