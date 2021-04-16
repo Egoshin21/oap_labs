@@ -8,24 +8,6 @@ namespace oap_labs
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.Write("Введите год XXI века: ");
-            int God1 = Convert.ToInt32(Console.ReadLine());
-            if (God1 >= 2001 & God1 < 2101)
-            {
-                for (int i = 1901; i < 2001; i++)
-                {
-                    int age = God1 - i;
-                    CheckYear(i, age);
-                }
-            }
-            else
-            {
-                Console.Write("Год не XXI века: ");
-            }
-            Console.ReadKey();
-        }
         static void CheckYear(int Year, int Age)
         {
             var StartDateTime = new DateTime(Year, 1, 1);
